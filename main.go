@@ -1,10 +1,19 @@
 package main
 
 func main() {
-	app := NewApplication()
+	input := Input{}
 
-	err := app.GetNumber()
+	output := Output{}
+
+	app := NewApplication(input, output)
+
+	number, scale, err := app.GetNumber()
 	if err != nil {
 		return
 	}
+
+	result := app.ConvertToSevenSegment(number, scale)
+
+	app.PrintSevenSegmentDisplay(result)
+
 }
