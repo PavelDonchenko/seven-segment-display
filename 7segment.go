@@ -28,15 +28,20 @@ func NewApplication(receiver Receiver, printer Printer) *Application {
 func (a *Application) ConvertToSevenSegment(number string, scale int) string {
 	matrixNumber := stringToMatrix(number, scale)
 
+	count := 4 + 2*(scale-2)
+
 	var out []string
 
-	for row := 0; row < 5+2*(scale-1); row++ {
+	for row := 0; row <= count; row++ {
 		var line string
 		var outputLine string
 		for _, item := range matrixNumber {
 			line += item[row] + "  "
-			outputLine = strings.NewReplacer("0", " ", "1", "|", "2", "-", "3", "*", "4", "_").Replace(line)
-			//fmt.Print(item[row], " ")
+			if row != 0 && row != count/2 && row != count {
+				outputLine = strings.NewReplacer("0", " ", "1", "|", "2", "-", "3", "*", "4", " ").Replace(line)
+			} else {
+				outputLine = strings.NewReplacer("0", " ", "1", "|", "2", "-", "3", "*", "4", "_").Replace(line)
+			}
 		}
 		out = append(out, outputLine)
 	}
@@ -48,18 +53,17 @@ func (a *Application) ConvertToSevenSegment(number string, scale int) string {
 
 func stringToMatrix(num string, factor int) [][]string {
 	numbers := map[string][]string{
-		"0": {"020", "101", "000", "101", "020"},
-		"1": {"000", "001", "000", "001", "000"},
-		"2": {"020", "001", "020", "100", "020"},
-		"3": {"020", "001", "020", "001", "020"},
-		"4": {"000", "101", "020", "001", "000"},
-		"5": {"020", "100", "020", "001", "020"},
-		"6": {"020", "100", "020", "101", "020"},
-		"7": {"020", "001", "000", "001", "000"},
-		"8": {"020", "101", "020", "101", "020"},
-		"9": {"020", "101", "020", "001", "000"},
-		".": {"000", "000", "000", "000", "030"},
-		"-": {"000", "000", "040", "000", "000"},
+		"0": {"040", "101", "141"},
+		"1": {"000", "001", "001"},
+		"2": {"040", "041", "140"},
+		"3": {"040", "041", "041"},
+		"4": {"000", "141", "001"},
+		"5": {"040", "140", "041"},
+		"6": {"040", "140", "141"},
+		"7": {"040", "001", "001"},
+		"8": {"040", "141", "141"},
+		"9": {"040", "141", "001"},
+		".": {"000", "000", "030"},
 	}
 
 	var result [][]string
@@ -89,6 +93,16 @@ func scale(code []string, factor int) []string {
 		result = append(result[:i], append(stretched, result[i+1:]...)...)
 	}
 
+	for i := 1; i < factor; i++ {
+		lastElement := result[len(result)-1]
+		if strings.Contains(lastElement, "3") {
+			lastElement = strings.ReplaceAll(lastElement, "3", "0")
+			result = append([]string{lastElement}, result...)
+		} else {
+			result = append(result, lastElement)
+		}
+	}
+
 	return result
 }
 
@@ -99,7 +113,7 @@ func replaceDuplicateStar(input string) string {
 
 	starCount := 0
 	for _, ch := range characters {
-		if ch == '*' || ch == '_' {
+		if ch == '*' {
 			starCount++
 			if starCount <= 1 {
 				result = append(result, ch)

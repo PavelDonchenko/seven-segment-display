@@ -27,5 +27,9 @@ func (i Input) GetNumber() (string, int, error) {
 		return "", 0, errors.New("scale number should be bigger than 0")
 	}
 
+	//if scale%2 == 0 {
+	//	scale += 1
+	//}
+
 	return number, scale, nil
 }
