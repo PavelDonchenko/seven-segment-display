@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type Input struct{}
 
@@ -18,6 +21,10 @@ func (i Input) GetNumber() (string, int, error) {
 	_, err = fmt.Scan(&scale)
 	if err != nil {
 		return "", 0, err
+	}
+
+	if scale < 1 {
+		return "", 0, errors.New("scale number should be bigger than 0")
 	}
 
 	return number, scale, nil

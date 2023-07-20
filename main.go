@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
 	input := Input{}
 
@@ -9,6 +11,7 @@ func main() {
 
 	number, scale, err := app.GetNumber()
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 

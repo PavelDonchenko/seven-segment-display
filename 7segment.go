@@ -35,7 +35,7 @@ func (a *Application) ConvertToSevenSegment(number string, scale int) string {
 		var outputLine string
 		for _, item := range matrixNumber {
 			line += item[row] + "  "
-			outputLine = strings.NewReplacer("0", " ", "1", "|", "2", "-", "3", "*").Replace(line)
+			outputLine = strings.NewReplacer("0", " ", "1", "|", "2", "-", "3", "*", "4", "_").Replace(line)
 			//fmt.Print(item[row], " ")
 		}
 		out = append(out, outputLine)
@@ -59,6 +59,7 @@ func stringToMatrix(num string, factor int) [][]string {
 		"8": {"020", "101", "020", "101", "020"},
 		"9": {"020", "101", "020", "001", "000"},
 		".": {"000", "000", "000", "000", "030"},
+		"-": {"000", "000", "040", "000", "000"},
 	}
 
 	var result [][]string
@@ -98,7 +99,7 @@ func replaceDuplicateStar(input string) string {
 
 	starCount := 0
 	for _, ch := range characters {
-		if ch == '*' {
+		if ch == '*' || ch == '_' {
 			starCount++
 			if starCount <= 1 {
 				result = append(result, ch)
