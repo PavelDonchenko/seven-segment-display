@@ -46,7 +46,17 @@ func (a *Application) ConvertToSevenSegment(number string, scale int) string {
 		out = append(out, outputLine)
 	}
 
-	res := strings.Join(out, "\n")
+	filtered := make([]string, 0)
+
+	for i, s := range out {
+		if strings.Contains(s, "_") {
+			filtered = append(filtered, s)
+		} else if i%2 != 0 {
+			filtered = append(filtered, s)
+		}
+	}
+
+	res := strings.Join(filtered, "\n")
 
 	return replaceDuplicateStar(res)
 }

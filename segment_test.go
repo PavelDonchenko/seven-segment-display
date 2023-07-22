@@ -18,7 +18,7 @@ func TestConvertToSevenSegment(t *testing.T) {
 		{name: "zero, scale 2",
 			number: "0",
 			scale:  2,
-			output: " __   \n|  |  \n|  |  \n|  |  \n|__|  ",
+			output: " __   \n|  |  \n|  |  \n|__|  ",
 		},
 		{name: "zero, eight, scale 2",
 			number: "80",
@@ -28,7 +28,7 @@ func TestConvertToSevenSegment(t *testing.T) {
 		{name: "zero, eight, scale 2",
 			number: "3.14",
 			scale:  3,
-			output: " ___                        \n    |             |  |   |  \n    |             |  |   |  \n ___|             |  |___|  \n    |             |      |  \n    |             |      |  \n ___|   *         |      |  ",
+			output: " ___                        \n    |             |  |   |  \n ___|             |  |___|  \n    |             |      |  \n ___|   *         |      |  ",
 		},
 	}
 

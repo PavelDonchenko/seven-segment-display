@@ -8,6 +8,6 @@ Input: number 876, scale 1
 
 Output:  ![image.png](image1/image.png)
 
-Input: number 3.14, scale 3
+Input: number 2.52, scale 5
 
-Output:   ![image.png](image1/image.2png)
+Output:   ![image.png](image1/image1.png)
